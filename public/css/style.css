@@ -1,0 +1,69 @@
+body {
+	background-color: #eee;
+}
+
+.card {
+	margin: 5px;
+	width: 100px;
+	height: 150px;
+	display: inline-block;
+	position: relative;
+	color: black;
+	cursor: pointer;
+}
+
+.card-front,
+.card-back {
+	background-color: #dfdfdf;
+	border: 1px white solid;
+	border-radius: 10px;
+	display: inline-block;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	backface-visibility: hidden;
+	transition: transform 400ms;
+}
+
+.card-front {
+	transform: rotateY(0turn);
+}
+
+.card-back {
+	transform: rotateY(-0.5turn);
+}
+
+.card.flipped .card-back {
+	transform: rotateY(0turn);
+}
+
+.card.flipped .card-front {
+	transform: rotateY(0.5turn);
+}
+
+.card-♦,
+.card-♥ {
+	color: red;
+}
+.card-corner {
+	margin: 5px;
+	font-family: monospace;
+	text-align: center;
+	position: absolute;
+}
+.top-left {
+	top: 0px;
+	left: 0px;
+}
+.bottom-right {
+	right: 0px;
+	bottom: 0px;
+	transform: rotate(0.5turn);
+}
+.symbols {
+	position: relative;
+	height: 100%;
+}
+.symbols div {
+	position: absolute;
+}

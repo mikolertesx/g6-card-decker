@@ -1,44 +1,3 @@
-body {
-	background-color: #eee;
-}
-.card {
-	background-color: #dfdfdf;
-	border: 1px white solid;
-	border-radius: 10px;
-	margin: 5px;
-	width: 100px;
-	height: 150px;
-	display: inline-block;
-	position: relative;
-	color: black;
-}
-.card.♦,
-.card.♥ {
-	color: red;
-}
-.card-corner {
-	margin: 5px;
-	font-family: monospace;
-	text-align: center;
-	position: absolute;
-}
-.top-left {
-	top: 0px;
-	left: 0px;
-}
-.bottom-right {
-	right: 0px;
-	bottom: 0px;
-	transform: rotate(0.5turn);
-}
-.symbols {
-	position: relative;
-	height: 100%;
-}
-.symbols div {
-	position: absolute;
-}
-
 .card[number="2"] .symbols div:nth-child(1),
 .card[number="2"] .symbols div:nth-child(2),
 .card[number="3"] .symbols div:nth-child(1),
@@ -194,8 +153,37 @@ body {
 	top: 50%;
 }
 
-.card[number="J"],
-.card[number="Q"],
-.card[number="K"] {
+.card[number="J"] .card-front,
+.card[number="Q"] .card-front,
+.card[number="K"] .card-front {
 	background-image: url("/img/cards.png");
 }
+
+.card[number="J"] .card-front {
+	background-position-x: -12px;
+}
+
+.card[number="Q"] .card-front {
+	background-position-x: -128px;
+}
+
+.card[number="K"] .card-front {
+	background-position-x: -240px;
+}
+
+.card-♠ .card-front {
+	background-position-y: -12px;
+}
+
+.card-♣ .card-front {
+	background-position-y: 168px;
+}
+
+.card-♦ .card-front {
+	background-position-y: 330px;
+}
+
+.card-♥ .card-front {
+	background-position-y: 500px;
+}
+
