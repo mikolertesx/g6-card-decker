@@ -66,11 +66,13 @@ function onFinishedFetching(res) {
 	});
 }
 
-function createCard(symbol, number) {
+function createCard(symbol, number, isFlipped = true) {
 	const isNumber = !isNaN(number) || number === "A";
 	const fixedSize = number === "A" ? 1 : number;
 	return `
-	<div class="card card-${symbol}" number="${number}">
+	<div class="card card-${symbol} ${
+		isFlipped ? "flipped" : ""
+	}" number="${number}">
 		<div class="card-front">
 			<div class="card-corner top-left">
 				<div>${number}</div>
