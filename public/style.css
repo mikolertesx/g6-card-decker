@@ -188,9 +188,14 @@ body {
 	top: 80px;
 }
 
+.card[number="A"] .symbols div:nth-child(1) {
+	transform: translate(-50%, -50%) scale(6);
+	left: 50%;
+	top: 50%;
+}
+
 .card[number="J"],
 .card[number="Q"],
-.card[number="K"],
-.card[number="A"] {
+.card[number="K"] {
 	background-image: url("/img/cards.png");
 }

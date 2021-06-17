@@ -42,7 +42,12 @@ function onFinishedFetching(res) {
 }
 
 function createCard(symbol, number) {
-	const isNumber = !isNaN(number);
+	if (number === "A") {
+		console.log("Ocurred");
+	}
+	// number = number === "A" ? 1 : number;
+	const isNumber = !isNaN(number) || number === "A";
+	const fixedSize = number === "A" ? 1 : number;
 	return `
 	<div class="card ${symbol}" number="${number}">
 		<div class="card-corner top-left">
@@ -52,7 +57,7 @@ function createCard(symbol, number) {
 		<div class="symbols">
 			${
 				isNumber
-					? `${new Array(parseInt(number))
+					? `${new Array(parseInt(fixedSize))
 							.fill(symbol)
 							.map(
 								(cardSymbol) => `
