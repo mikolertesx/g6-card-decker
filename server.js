@@ -5,6 +5,22 @@ const { Deck, Hand } = require("./app/deck");
 app.use(express.static("public"));
 app.use(express.json());
 
+app.get("/get-deck", (req, res) => {
+	const deck = new Deck();
+	const hand = new Hand(deck, 2);
+	const fixedHand = {
+		hand: hand.cards.map((card, index) => ({
+			card,
+			flipped: index > 2 ? false : true,
+		})),
+		deck: deck
+			.dispatchCards(5)
+			.map((card, index) => ({ card, flipped: index > 1 ? false : true })),
+	};
+
+	return res.json(fixedHand);
+});
+
 app.post("/get-cards", (req, res) => {
 	// const numPlayers = 5;
 	const { numPlayers, cardsPerPlayer } = req.body;

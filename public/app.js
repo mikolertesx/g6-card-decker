@@ -1,7 +1,8 @@
-const container = document.querySelector(".deck");
+const deckContainer = document.querySelector(".deck");
+const handContainer = document.querySelector(".hand");
 const button = document.querySelector("button");
-const playerNumber = document.querySelector("#num_players");
-const cardNumber = document.querySelector("#num_cards");
+// const playerNumber = document.querySelector("#num_players");
+// const cardNumber = document.querySelector("#num_cards");
 
 const flippedReferences = [];
 
@@ -9,16 +10,7 @@ button.addEventListener("click", (e) => {
 	e.preventDefault();
 
 	// Send the data.
-	fetch("/get-cards", {
-		headers: {
-			"Content-Type": "application/json",
-		},
-		method: "POST",
-		body: JSON.stringify({
-			numPlayers: +playerNumber.value,
-			cardsPerPlayer: +cardNumber.value,
-		}),
-	})
+	fetch("/get-deck")
 		.then((data) => data.json())
 		.then(onFinishedFetching);
 });
@@ -32,34 +24,32 @@ function flippedCard(element) {
 }
 
 function cleanCards() {
-	const allCards = document.querySelectorAll(".card");
+	const allCards = document.querySelectorAll(".hand .card");
 	allCards.forEach((card) =>
 		card.removeEventListener(card, flippedReferences.shift())
 	);
 }
 
 function mapCards(card) {
-	const number = card.slice(0, -1);
-	const symbol = card.slice(-1);
-	return createCard(symbol, number);
+	const number = card.card.slice(0, -1);
+	const symbol = card.card.slice(-1);
+	const flipped = card.flipped;
+	return createCard(symbol, number, flipped);
 }
 
 function onFinishedFetching(res) {
-	console.log(res);
+	const { hand, deck } = res;
 	cleanCards();
-	const { deck, hands } = res;
+	const handElements = hand.map(mapCards);
+	handContainer.innerHTML = "<h2>Hands</h2>";
+	handContainer.innerHTML += handElements.join("\n");
 
 	const deckElements = deck.map(mapCards);
-	container.innerHTML = deckElements.join("\n");
+	deckContainer.innerHTML = "<h2>Deck</h2>";
+	deckContainer.innerHTML += deckElements.join("\n");
 
-	hands.forEach((hand, index) => {
-		const newHand = hand.map(mapCards);
-		container.innerHTML += `<h2>Player ${index + 1}</h2>`;
-		container.innerHTML += newHand.join("\n");
-	});
-
-	const allCards = document.querySelectorAll(".card");
-	allCards.forEach((card) => {
+	const handCards = document.querySelectorAll(".hand .card");
+	handCards.forEach((card) => {
 		const flipFunction = () => flippedCard(card);
 		flippedReferences.push(flipFunction);
 		card.addEventListener("click", flipFunction);
