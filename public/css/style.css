@@ -30,6 +30,8 @@ body {
 }
 
 .card-back {
+	background: url('/img/cover.png');
+	background-size: 100% 100%;
 	transform: rotateY(-0.5turn);
 }
 

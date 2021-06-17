@@ -96,7 +96,6 @@ function createCard(symbol, number) {
 			</div>
 		</div>
 		<div class="card-back">
-			<p>Back of the card</p>
 		</div>
 	</div>`;
 }
