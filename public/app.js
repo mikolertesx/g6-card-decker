@@ -6,13 +6,20 @@ const button = document.querySelector("button");
 
 const flippedReferences = [];
 
+const requestDeck = () => {
+	return fetch("/get-deck")
+		.then((data) => data.json())
+		.then(onFinishedFetching);
+};
+
+window.onload = requestDeck;
+// window.onLoad(() => requestDeck());
+
 button.addEventListener("click", (e) => {
 	e.preventDefault();
 
 	// Send the data.
-	fetch("/get-deck")
-		.then((data) => data.json())
-		.then(onFinishedFetching);
+	requestDeck();
 });
 
 function flippedCard(element) {
