@@ -2,22 +2,33 @@ const express = require("express");
 const app = express();
 const { Deck, Hand } = require("./app/deck");
 
+const HANDS_PER_DECK = 2;
+
 app.use(express.static("public"));
 app.use(express.json());
 
 const deck = new Deck();
 const deckCards = deck.dispatchCards(5);
 app.get("/get-deck", (req, res) => {
-	const hand = new Hand(deck, 2);
+	const fixedDeckCards = deckCards.map((card, index) => ({
+		card,
+		flipped: index > 1 ? false : true,
+	}));
+
+	if (deck.cards.length < HANDS_PER_DECK) {
+		return res.json({
+			hand: [],
+			deck: fixedDeckCards,
+			error: "No hay más cartas para unirse.",
+		});
+	}
+	const hand = new Hand(deck, HANDS_PER_DECK);
 	const fixedHand = {
 		hand: hand.cards.map((card, index) => ({
 			card,
 			flipped: index > 2 ? false : true,
 		})),
-		deck: deckCards.map((card, index) => ({
-			card,
-			flipped: index > 1 ? false : true,
-		})),
+		deck: fixedDeckCards,
 	};
 
 	return res.json(fixedHand);

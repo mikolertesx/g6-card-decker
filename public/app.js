@@ -38,11 +38,17 @@ function mapCards(card) {
 }
 
 function onFinishedFetching(res) {
-	const { hand, deck } = res;
+	const { hand, deck, error } = res;
 	cleanCards();
-	const handElements = hand.map(mapCards);
-	handContainer.innerHTML = "<h2>Hands</h2>";
-	handContainer.innerHTML += handElements.join("\n");
+
+	if (hand.length === 0) {
+		handContainer.innerHTML = "<h2>No puedes unirte en este momento.</h2>";
+		handContainer.innerHTML += `<h3>Razon: ${error}</h3>`;
+	} else {
+		const handElements = hand.map(mapCards);
+		handContainer.innerHTML = "<h2>Hands</h2>";
+		handContainer.innerHTML += handElements.join("\n");
+	}
 
 	const deckElements = deck.map(mapCards);
 	deckContainer.innerHTML = "<h2>Deck</h2>";
