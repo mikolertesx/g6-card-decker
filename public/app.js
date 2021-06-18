@@ -6,10 +6,23 @@ const button = document.querySelector("button");
 
 const flippedReferences = [];
 
-const requestDeck = () => {
-	return fetch("/get-deck")
-		.then((data) => data.json())
-		.then(onFinishedFetching);
+const TIME_FETCH = 200;
+let locked = false;
+const requestDeck = async () => {
+	if (locked === true) {
+		setTimeout(() => {
+			requestDeck();
+		}, TIME_FETCH * 2);
+		return;
+	}
+	const data = await fetch("/get-deck");
+	const dataJSON = await data.json();
+	locked = true;
+	// Make it less likely to be spammed.
+	setTimeout(() => {
+		onFinishedFetching(dataJSON);
+		locked = false;
+	}, TIME_FETCH);
 };
 
 window.onload = requestDeck;
